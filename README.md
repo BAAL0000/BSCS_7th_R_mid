@@ -21,4 +21,3 @@ Each topic has full notes, exam-focus points, an **"Explain it simply"** section
 - `data/` – topic notes (`db.js`, `en.js`, `dm.js`), simple explanations (`simple.js`) and source-slide mapping (`sources.js`)
 - `img/` – photos, `img/fig/` key diagrams, `img/src/` source slides and pages from the lecture files
 
-Photos are from [Unsplash](https://unsplash.com) (credited in the site footer). Diagrams and source slides come from the course lecture files.
