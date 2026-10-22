@@ -405,7 +405,6 @@ function openDetail(id){
           <button ${next?`data-open="${next.id}"`:'disabled'}><small>Next</small>${next?esc(next.t):'—'}</button>
         </div>
         <div class="box"><h2>${esc(L.n)} · ${same.length} topics</h2><ul class="toc">${same.map((t,i)=>`<li><button data-open="${t.id}" class="${t.id===x.id?'on':''}"><em>${String(i+1).padStart(2,'0')}</em>${esc(t.t)}${done.has(t.id)?' ✓':''}</button></li>`).join('')}</ul></div>
-        <div class="box"><h2>Made by</h2><p style="margin:0">${esc(ME.name)}<br><span style="color:var(--muted)">${esc(ME.dept)}, ${esc(ME.uni)}</span></p></div>
       </aside>
     </div>`;
   $('#list-view').hidden = true; dv.hidden = false;
