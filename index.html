@@ -103,7 +103,13 @@ button{font-family:inherit}
 .rec h2{font-family:var(--display);font-weight:400;font-size:clamp(20px,2.4vw,28px);margin:0}
 .count{font-family:var(--mono);font-size:13px;color:var(--muted)}
 .lec{margin-top:36px}
-.lec-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.lec-head{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-bottom:16px;padding:0 0 12px;border:0;border-bottom:1px solid var(--line);background:none;width:100%;text-align:left;cursor:pointer;color:var(--ink);font:inherit}
+.lec-head .chev{width:30px;height:30px;border-radius:50%;background:var(--paper);border:1px solid var(--line);flex:none;position:relative}
+.lec-head .chev::after{content:"";position:absolute;left:10px;top:8px;width:8px;height:8px;border-right:2px solid var(--ink);border-bottom:2px solid var(--ink);transform:rotate(45deg);transition:transform .25s}
+.lec-head[aria-expanded="true"] .chev::after{transform:rotate(-135deg);top:12px}
+.mbar{display:none}
+mjx-container:not([display="true"]){display:inline-block;max-width:100%;overflow-x:auto;overflow-y:hidden;vertical-align:middle}
+.exam li,.notes li,.notes p{overflow-wrap:anywhere}
 .lec-head .tag{font-family:var(--mono);font-size:12px;padding:5px 10px;border-radius:999px;color:#fff;background:var(--c)}
 .lec-head h3{margin:0;font-size:20px;font-weight:800}
 .lec-head small{color:var(--muted);font-size:13px;margin-left:auto}
@@ -262,6 +268,67 @@ footer strong{color:var(--ink)}
   .notes{padding:4px 16px 18px}
   .me small{display:none}
 }
+/* ---------- phones ---------- */
+@media (max-width:700px){
+  html,body{overflow-x:hidden}
+  .top{padding-block:12px;gap:10px}
+  .top nav{flex-wrap:nowrap;overflow-x:auto;gap:18px;width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .top nav::-webkit-scrollbar{display:none}
+  .top nav a{white-space:nowrap;padding:10px 0}
+  .headline{font-size:clamp(26px,8.5vw,40px)}
+  .lede{font-size:15px}
+  .course span{font-size:12px;padding:6px 10px}
+  .cta-row .btn{flex:1;justify-content:center}
+  .search{margin-top:20px}
+  .progress{display:none}
+  .stats{margin-top:16px;gap:10px}
+  .stat{padding:12px 14px}
+  .stat .ph{width:46px;height:46px;border-radius:12px}
+  .rec{padding-block:20px 48px}
+  .lec{margin-top:14px}
+  .lec-head{gap:6px 10px;margin-bottom:10px}
+  .lec-head h3{font-size:16px;flex:1 1 100%;order:3}
+  .lec-head small{margin-left:auto}
+  /* compact horizontal cards: photo left, text right */
+  .cards{grid-template-columns:minmax(0,1fr);gap:10px}
+  .card{flex-direction:row;align-items:stretch;gap:12px;padding:8px;border-radius:16px}
+  .thumb{width:96px;height:auto;min-height:96px;flex:none;border-radius:12px}
+  .thumb .chip,.thumb .done{display:none}
+  .thumb .g{font-size:11px;padding:3px 7px;right:6px;bottom:6px;max-width:84px}
+  .card-body{padding:4px 2px;justify-content:center;min-width:0}
+  .card h4{font-size:15px}
+  .card p{font-size:12.5px;-webkit-line-clamp:1}
+  .meta{font-size:11.5px;gap:4px 10px}
+  /* topic page */
+  .detail{padding-block:12px 96px}
+  .crumbs{font-size:12.5px}
+  .banner{height:220px;border-radius:18px}
+  .banner .ov{padding:18px}
+  .banner .sum{font-size:14px}
+  .exam{padding:16px 16px 16px 20px}
+  .notes.easy{font-size:15.5px}
+  .notes h3{font-size:17px}
+  .math{font-size:12.5px;padding:8px 6px}
+  .dg{overflow-x:auto;padding:10px}
+  .dg svg{min-width:560px;max-height:none}
+  .dg figcaption::after{content:" — swipe sideways to see all of it";}
+  .srcgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .figgrid{grid-template-columns:minmax(0,1fr)}
+  .simple-btn{font-size:15px}
+  .simple-box{padding:4px 16px 18px}
+  .simple-box p{font-size:15.5px}
+  .full summary{padding:16px}
+  .side .pn{display:none}
+  /* bottom bar: previous / mark revised / next, always in reach */
+  .mbar{display:grid;grid-template-columns:1fr 1.3fr 1fr;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:40;
+    padding:10px max(12px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(12px,env(safe-area-inset-left,0px));
+    background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(10px);border-top:1px solid var(--line)}
+  .mbar button{min-height:46px;border-radius:12px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-weight:800;font-size:14px;cursor:pointer}
+  .mbar button:disabled{opacity:.4}
+  .mbar .mark2{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .mbar .mark2.done{background:var(--dm);border-color:var(--dm)}
+  .lightbox .nav{width:42px;height:42px}
+}
 @media (prefers-reduced-motion:reduce){
   .layer,.layer.on{transition:opacity .3s;animation:none;transform:none;filter:none}
   .headline .ch,.lede,.course,.disc,.orb,.card,.detail,.banner img{transition:none;animation:none}
@@ -366,9 +433,18 @@ function inline(s){ return String(s).split(/(\\\(.+?\\\))/g).map((p,i) => i % 2 
 // MathJax loads async; retry for a few seconds, then leave the plain TeX visible
 function typesetMath(el, tries = 0){
   if (!/\\\(|\$\$/.test(el.textContent)) return;
-  if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetClear && MathJax.typesetClear([el]); MathJax.typesetPromise([el]).catch(() => {}); }
+  if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetClear && MathJax.typesetClear([el]); MathJax.typesetPromise([el]).then(() => fitMath(el)).catch(() => {}); }
   else if (tries < 40) setTimeout(() => typesetMath(el, tries + 1), 250);
 }
+// shrink an equation that is only a little too wide for the screen; very wide ones keep a sideways scroll so text stays readable
+function fitMath(el){
+  el.querySelectorAll('.math').forEach(m => {
+    const svg = m.querySelector('svg'); if (!svg) return;
+    svg.style.maxWidth = ''; const ratio = m.clientWidth / m.scrollWidth;
+    if (ratio < 1 && ratio >= 0.72) { svg.style.maxWidth = '100%'; svg.style.height = 'auto'; }
+  });
+}
+addEventListener('resize', () => { const dv = $('#detail-view'); if (!dv.hidden) fitMath(dv); });
 function render(md){
   const lines = md.split('\n'); let html = '', i = 0;
   while (i < lines.length){
@@ -415,17 +491,23 @@ function renderStats(){
     return `<button class="stat ${$('#f-sub').value===k?'on':''}" data-sub="${k}" style="--c:${S.c}"><span class="ph" style="background-image:url(img/${S.photo}.jpg)"></span><span style="flex:1;min-width:0"><b>${S.full}</b><small>${lc} lectures · ${all.length} topics · ${n} revised</small><span class="bar"><i style="width:${all.length?n/all.length*100:0}%"></i></span></span></button>`;
   }).join('');
 }
+// on phones, lecture groups start folded so the list isn't one endless scroll; a tapped group remembers its state
+const lecOpen = new Map();
+const isPhone = () => matchMedia('(max-width:700px)').matches;
 function renderList(){
   const sub=$('#f-sub').value, q=$('#f-q').value.trim().toLowerCase(), lec=$('#f-lec').value;
   const list = TOPICS.filter(x => (sub==='all'||x.s===sub) && (lec==='all'||x.lec===lec) &&
-    (!q || (x.t+' '+x.sum+' '+x.key.join(' ')+' '+x.body).toLowerCase().includes(q)));
+    (!q || (x.t+' '+x.sum+' '+x.key.join(' ')+' '+x.body+' '+(EASY[x.id] ? EASY[x.id].n : '')).toLowerCase().includes(q)));
   const groups = LECS.map(l => ({ l, items: list.filter(t => t.lec === l.id) })).filter(g => g.items.length);
+  const filtering = !!q || lec !== 'all';
   let k = 0;
-  $('#lectures').innerHTML = groups.length ? groups.map(g => `
+  $('#lectures').innerHTML = groups.length ? groups.map(g => {
+    const open = filtering || (lecOpen.has(g.l.id) ? lecOpen.get(g.l.id) : !isPhone());
+    return `
     <section class="lec" style="--c:${SUBJECTS[g.l.s].c}">
-      <div class="lec-head"><span class="tag">${SUBJECTS[g.l.s].name} · ${esc(g.l.n)}</span><h3>${esc(g.l.t)}</h3><small>${g.items.length} topic${g.items.length>1?'s':''}</small></div>
-      <div class="cards">${g.items.map(t => cardHTML(t, k++)).join('')}</div>
-    </section>`).join('') : '<p class="empty">No topics match. Try another word, or set Subject and Lecture to "All".</p>';
+      <button class="lec-head" data-lec="${g.l.id}" aria-expanded="${open}"><span class="tag">${SUBJECTS[g.l.s].name} · ${esc(g.l.n)}</span><h3>${esc(g.l.t)}</h3><small>${g.items.length} topic${g.items.length>1?'s':''}</small><i class="chev" aria-hidden="true"></i></button>
+      ${open ? `<div class="cards">${g.items.map(t => cardHTML(t, k++)).join('')}</div>` : ''}
+    </section>`; }).join('') : '<p class="empty">No topics match. Try another word, or set Subject and Lecture to "All".</p>';
   $('#count').textContent = `${list.length} of ${TOPICS.length} topics`;
   $('#listTitle').textContent = sub==='all' ? 'All topics' : SUBJECTS[sub].full + ' topics';
   renderStats();
@@ -442,6 +524,11 @@ function openDetail(id){
   dv.style.setProperty('--c', S.c);
   dv.innerHTML = `
     <div class="crumbs"><button class="back" id="back">← All topics</button><span>${S.name} / ${esc(L.n)} / ${esc(x.t)}</span></div>
+    <nav class="mbar" aria-label="Topic navigation">
+      <button ${prev?`data-open="${prev.id}"`:'disabled'} aria-label="Previous topic">‹ Prev</button>
+      <button class="mark2 ${done.has(x.id)?'done':''}" id="mark2">${done.has(x.id)?'Revised ✓':'Mark revised'}</button>
+      <button ${next?`data-open="${next.id}"`:'disabled'} aria-label="Next topic">Next ›</button>
+    </nav>
     <div class="banner"><img src="img/${x.img}.jpg" alt=""><div class="ov"><span class="lt">${S.full} · ${esc(L.n)}: ${esc(L.t)}</span><h1>${esc(x.t)}</h1><p class="sum">${esc(x.sum)}</p></div></div>
     <div class="d-grid">
       <article>
@@ -479,6 +566,7 @@ function openDetail(id){
   if (sb) sb.onclick = () => { const open = sb.getAttribute('aria-expanded') === 'true';
     sb.setAttribute('aria-expanded', !open); $('#simpleBox').hidden = open;
     if (!open) $('#simpleBox').scrollIntoView({behavior: reduce ? 'auto' : 'smooth', block:'nearest'}); };
+  $('#mark2').onclick = () => $('#mark').click();
   $('#mark').onclick = () => { done.has(x.id) ? done.delete(x.id) : done.add(x.id); saveDone(); openDetail(x.id); };
   if (x.s !== current) setSubject(x.s);
   dv.scrollIntoView({behavior: reduce ? 'auto' : 'smooth'});
@@ -501,6 +589,7 @@ function lightbox(list, start){
 }
 
 document.addEventListener('click', e => {
+  const lh = e.target.closest('[data-lec]'); if (lh) { lecOpen.set(lh.dataset.lec, lh.getAttribute('aria-expanded') !== 'true'); renderList(); return; }
   const c = e.target.closest('.card'); if (c) return openDetail(c.dataset.id);
   const o = e.target.closest('[data-open]'); if (o) return openDetail(o.dataset.open);
   const f = e.target.closest('[data-gal]'); if (f) return lightbox(GAL[f.dataset.gal], +f.dataset.i);
