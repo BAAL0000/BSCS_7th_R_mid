@@ -186,6 +186,18 @@ button{font-family:inherit}
 .lightbox .nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;padding:0;font-size:22px;display:flex;align-items:center;justify-content:center}
 .lightbox .nav.prev{left:max(12px,env(safe-area-inset-left,0px));right:auto}
 .lightbox .nav.next{right:max(12px,env(safe-area-inset-right,0px));left:auto;top:50%}
+.sec-h{margin:18px 0 4px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.sec-h::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c)}
+.notes.easy{font-size:16.5px}
+.notes.easy li{margin:6px 0}
+.notes.example{background:var(--soft);border-color:transparent}
+.notes.example ol li{margin:8px 0}
+.full{margin-top:22px;background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.full summary{cursor:pointer;padding:18px 22px;font-weight:800;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:56px}
+.full summary::-webkit-details-marker{display:none}
+.full summary::after{content:"+";font-size:22px;color:var(--muted)}
+.full[open] summary::after{content:"−"}
+.full .notes{border:0;border-top:1px solid var(--line);border-radius:0;margin-top:0}
 .simple{margin-top:22px}
 .simple-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed var(--c);background:var(--paper);color:var(--ink);border-radius:18px;padding:16px 20px;font-weight:800;font-size:16px;cursor:pointer;min-height:56px;transition:background .25s,transform .25s var(--ease)}
 .simple-btn:hover{background:var(--soft);transform:translateY(-2px)}
@@ -290,6 +302,9 @@ footer strong{color:var(--ink)}
 <script src="data/dm.js"></script>
 <script src="data/simple.js"></script>
 <script src="data/sources.js"></script>
+<script src="data/easy-db.js"></script>
+<script src="data/easy-en.js"></script>
+<script src="data/easy-dm.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const ME = { name: 'Syed Talha Aliyan Ali Shah', dept: 'Department of IT', uni: 'Thal University' };
@@ -298,7 +313,7 @@ const SUBJECTS = {
   en:{name:'Entrepreneurship', full:'Entrepreneurship', head:'Build your own venture', lede:'Mindset, intention, corporate entrepreneurship, new-entry strategy, creativity and going global.', disc:'Theories, myths, first movers, innovation, product life cycle and international entry.', c:'var(--en)', photo:'lean'},
   dm:{name:'Data Mining', full:'Data Mining', head:'Discover hidden patterns', lede:'Data mining tasks and KDD, linear regression, decision trees with ID3, and neural networks.', disc:'Classification, clustering, regression, ID3, perceptron and backpropagation.', c:'var(--dm)', photo:'brain1'}
 };
-const LECS = window.LECTURES, TOPICS = window.TOPICS, SIMPLE = window.SIMPLE || {}, SOURCES = window.SOURCES || {};
+const LECS = window.LECTURES, TOPICS = window.TOPICS, SIMPLE = window.SIMPLE || {}, SOURCES = window.SOURCES || {}, EASY = window.EASY || {};
 let GAL = { figs: [], src: [] };
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -384,7 +399,8 @@ function openDetail(id){
     <div class="d-grid">
       <article>
         <section class="exam"><h2>Exam focus</h2><ul>${x.key.map(k=>`<li>${inline(k)}</li>`).join('')}</ul></section>
-        <section class="notes">${render(x.body)}</section>
+        ${EASY[x.id] ? `<section class="notes easy"><h2 class="sec-h">Easy notes</h2>${render(EASY[x.id].n)}</section>
+        <section class="notes example"><h2 class="sec-h">Step-by-step example</h2>${render(EASY[x.id].x)}</section>` : `<section class="notes">${render(x.body)}</section>`}
         ${x.figs ? `<section class="figs"><h2>Key diagrams</h2><div class="figgrid">${x.figs.map((f,i)=>`<button class="fig" data-gal="figs" data-i="${i}"><img src="img/fig/${f.src}.jpg" alt="${esc(f.cap)}" loading="lazy"><span>${esc(f.cap)}</span></button>`).join('')}</div></section>` : ''}
         ${SIMPLE[x.id] ? `<section class="simple">
           <button class="simple-btn" id="simpleBtn" aria-expanded="false" aria-controls="simpleBox">Explain it simply
@@ -394,6 +410,7 @@ function openDetail(id){
             <p>${esc(SIMPLE[x.id].p)}</p>
             <div class="remember"><b>Remember</b><span>${esc(SIMPLE[x.id].m)}</span></div>
           </div></section>` : ''}
+        ${EASY[x.id] ? `<details class="full"><summary>Full lecture notes (detailed)</summary><div class="notes">${render(x.body)}</div></details>` : ''}
         ${src.length ? `<section class="sources"><h2>Source: your lecture slides</h2>
           <p class="src-note">This topic was written from these ${src.length} ${src.length>1?'slides/pages':'slide/page'} of <strong>${esc([...new Set(src.map(s=>s.cap.split(' — ')[0]))].join(', '))}</strong>. Tap one to view it full size.</p>
           <div class="srcgrid">${src.map((s,i)=>`<button class="fig" data-gal="src" data-i="${i}"><img src="${s.path}" alt="${esc(s.cap)}" loading="lazy"><span>${esc(s.cap.split(' — ')[1])}</span></button>`).join('')}</div></section>` : ''}
