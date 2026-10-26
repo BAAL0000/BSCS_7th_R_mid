@@ -186,6 +186,49 @@ button{font-family:inherit}
 .lightbox .nav{position:absolute;top:50%;transform:translateY(-50%);width:48px;height:48px;border-radius:50%;padding:0;font-size:22px;display:flex;align-items:center;justify-content:center}
 .lightbox .nav.prev{left:max(12px,env(safe-area-inset-left,0px));right:auto}
 .lightbox .nav.next{right:max(12px,env(safe-area-inset-right,0px));left:auto;top:50%}
+.sec-h{margin:18px 0 4px;font-size:15px;letter-spacing:.06em;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.sec-h::before{content:"";width:10px;height:10px;border-radius:3px;background:var(--c)}
+.notes.easy{font-size:16.5px}
+.notes.easy li{margin:6px 0}
+.notes.example{background:var(--soft);border-color:transparent}
+.notes.example ol li{margin:8px 0}
+.full{margin-top:22px;background:var(--paper);border:1px solid var(--line);border-radius:20px;overflow:hidden}
+.full summary{cursor:pointer;padding:18px 22px;font-weight:800;font-size:16px;list-style:none;display:flex;justify-content:space-between;align-items:center;min-height:56px}
+.full summary::-webkit-details-marker{display:none}
+.full summary::after{content:"+";font-size:22px;color:var(--muted)}
+.full[open] summary::after{content:"−"}
+.full .notes{border:0;border-top:1px solid var(--line);border-radius:0;margin-top:0}
+.math{margin:12px 0;padding:10px 14px;background:var(--soft);border-radius:12px;overflow-x:auto;overflow-y:hidden;font-size:15px;text-align:center}
+@media (max-width:700px){ .math{font-size:13px;padding:8px 10px} }
+.notes.example .math{background:var(--paper)}
+.dg{margin:16px 0;padding:14px;background:#fff;border:1px solid var(--line);border-radius:16px}
+.dg svg{width:100%;height:auto;display:block;max-height:360px}
+.dg figcaption{font-size:13.5px;color:var(--muted);text-align:center;margin-top:8px}
+.dg .t{fill:var(--ink);font:600 15px var(--body)}
+.dg .big{fill:var(--ink);font:700 28px var(--body)}
+.dg .s{fill:var(--muted);font:500 12.5px var(--body)}
+.dg .w{fill:var(--accent);font:700 12.5px var(--mono)}
+.dg .ln{stroke:#8a7f7a;stroke-width:1.6;fill:none}
+.dg .ln.thin{stroke-width:1;opacity:.55}
+.dg .ln.back,.dg .ln.step{stroke:var(--en);stroke-dasharray:5 4}
+.dg .ah{fill:#8a7f7a}
+.dg .axis{stroke:var(--ink);stroke-width:1.2}
+.dg .grid{stroke:var(--line);stroke-dasharray:4 4}
+.dg .nd{fill:var(--paper);stroke:var(--ink);stroke-width:2}
+.dg .nd.in{fill:#E8EEFF;stroke:var(--db)}
+.dg .nd.hid{fill:#E6F6EF;stroke:var(--dm)}
+.dg .nd.out{fill:#FFEDE3;stroke:var(--en)}
+.dg .nd.bias{fill:#F3F3F3;stroke:#999}
+.dg .nd.sum{fill:#FFF8E6}
+.dg .nd.fx{fill:#F4EEFF;stroke:#7a55c7}
+.dg .curve{stroke:var(--db);stroke-width:3;fill:none}
+.dg .dot{fill:var(--en)}
+.dg .dot.pos{fill:var(--dm)}
+.dg .neg line{stroke:var(--en);stroke-width:3}
+.dg .bound{stroke:var(--db);stroke-width:3}
+.dg .band{stroke:var(--db);stroke-width:1.2;stroke-dasharray:6 5}
+.dg .fwd{fill:#FFF3B8}
+.dg .bwd{fill:#FFE0CF}
 .simple{margin-top:22px}
 .simple-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed var(--c);background:var(--paper);color:var(--ink);border-radius:18px;padding:16px 20px;font-weight:800;font-size:16px;cursor:pointer;min-height:56px;transition:background .25s,transform .25s var(--ease)}
 .simple-btn:hover{background:var(--soft);transform:translateY(-2px)}
@@ -290,6 +333,13 @@ footer strong{color:var(--ink)}
 <script src="data/dm.js"></script>
 <script src="data/simple.js"></script>
 <script src="data/sources.js"></script>
+<script src="data/easy-db.js"></script>
+<script src="data/easy-en.js"></script>
+<script src="data/easy-dm.js"></script>
+<script src="data/easy-nn.js"></script>
+<script src="data/nn-diagrams.js"></script>
+<script>window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] }, svg: { fontCache: 'global' }, startup: { typeset: false } };</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-svg-full.js" async></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const ME = { name: 'Syed Talha Aliyan Ali Shah', dept: 'Department of IT', uni: 'Thal University' };
@@ -298,7 +348,7 @@ const SUBJECTS = {
   en:{name:'Entrepreneurship', full:'Entrepreneurship', head:'Build your own venture', lede:'Mindset, intention, corporate entrepreneurship, new-entry strategy, creativity and going global.', disc:'Theories, myths, first movers, innovation, product life cycle and international entry.', c:'var(--en)', photo:'lean'},
   dm:{name:'Data Mining', full:'Data Mining', head:'Discover hidden patterns', lede:'Data mining tasks and KDD, linear regression, decision trees with ID3, and neural networks.', disc:'Classification, clustering, regression, ID3, perceptron and backpropagation.', c:'var(--dm)', photo:'brain1'}
 };
-const LECS = window.LECTURES, TOPICS = window.TOPICS, SIMPLE = window.SIMPLE || {}, SOURCES = window.SOURCES || {};
+const LECS = window.LECTURES, TOPICS = window.TOPICS, SIMPLE = window.SIMPLE || {}, SOURCES = window.SOURCES || {}, EASY = window.EASY || {};
 let GAL = { figs: [], src: [] };
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -311,11 +361,23 @@ try { done = new Set(JSON.parse(localStorage.getItem('sem7-revised') || '[]')); 
 const saveDone = () => { try { localStorage.setItem('sem7-revised', JSON.stringify([...done])); } catch(e) {} };
 
 /* ---------------- tiny notes renderer ---------------- */
-function inline(s){ return esc(s).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>'); }
+// inline math \( … \) is kept as-is (only escaped) so MathJax can typeset it
+function inline(s){ return String(s).split(/(\\\(.+?\\\))/g).map((p,i) => i % 2 ? esc(p) : esc(p).replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>').replace(/\*(.+?)\*/g,'<em>$1</em>')).join(''); }
+// MathJax loads async; retry for a few seconds, then leave the plain TeX visible
+function typesetMath(el, tries = 0){
+  if (!/\\\(|\$\$/.test(el.textContent)) return;
+  if (window.MathJax && MathJax.typesetPromise) { MathJax.typesetClear && MathJax.typesetClear([el]); MathJax.typesetPromise([el]).catch(() => {}); }
+  else if (tries < 40) setTimeout(() => typesetMath(el, tries + 1), 250);
+}
 function render(md){
   const lines = md.split('\n'); let html = '', i = 0;
   while (i < lines.length){
     const l = lines[i];
+    if (l.trim().startsWith('$$')){ let m = l.trim(); i++;
+      if (!(m.length > 4 && m.endsWith('$$'))) { while(i<lines.length){ m += '\n' + lines[i]; if (lines[i].trim().endsWith('$$')) { i++; break; } i++; } }
+      html += `<div class="math">${esc(m)}</div>`; continue; }
+    if (l.startsWith('::fig ')){ const [name, cap] = l.slice(6).split('|').map(s => s.trim()); const D = (window.DIAGRAMS || {})[name];
+      if (D) html += `<figure class="dg">${D}${cap ? `<figcaption>${inline(cap)}</figcaption>` : ''}</figure>`; i++; continue; }
     if (l.trim() === '~~~'){ let code=[]; i++; while(i<lines.length && lines[i].trim()!=='~~~'){ code.push(lines[i]); i++; } i++; html += `<pre>${esc(code.join('\n'))}</pre>`; continue; }
     if (l.startsWith('## ')){ html += `<h3>${inline(l.slice(3))}</h3>`; i++; continue; }
     if (l.startsWith('| ')){ const rows=[]; while(i<lines.length && lines[i].startsWith('| ')){ rows.push(lines[i].replace(/^\|\s*|\s*\|\s*$/g,'').split(/\s+\|\s+/)); i++; }
@@ -383,8 +445,9 @@ function openDetail(id){
     <div class="banner"><img src="img/${x.img}.jpg" alt=""><div class="ov"><span class="lt">${S.full} · ${esc(L.n)}: ${esc(L.t)}</span><h1>${esc(x.t)}</h1><p class="sum">${esc(x.sum)}</p></div></div>
     <div class="d-grid">
       <article>
-        <section class="exam"><h2>Exam focus</h2><ul>${x.key.map(k=>`<li>${inline(k)}</li>`).join('')}</ul></section>
-        <section class="notes">${render(x.body)}</section>
+        <section class="exam"><h2>Exam focus</h2><ul>${((EASY[x.id] && EASY[x.id].key) || x.key).map(k=>`<li>${inline(k)}</li>`).join('')}</ul></section>
+        ${EASY[x.id] ? `<section class="notes easy"><h2 class="sec-h">Easy notes</h2>${render(EASY[x.id].n)}</section>
+        <section class="notes example"><h2 class="sec-h">Step-by-step example</h2>${render(EASY[x.id].x)}</section>` : `<section class="notes">${render(x.body)}</section>`}
         ${x.figs ? `<section class="figs"><h2>Key diagrams</h2><div class="figgrid">${x.figs.map((f,i)=>`<button class="fig" data-gal="figs" data-i="${i}"><img src="img/fig/${f.src}.jpg" alt="${esc(f.cap)}" loading="lazy"><span>${esc(f.cap)}</span></button>`).join('')}</div></section>` : ''}
         ${SIMPLE[x.id] ? `<section class="simple">
           <button class="simple-btn" id="simpleBtn" aria-expanded="false" aria-controls="simpleBox">Explain it simply
@@ -394,6 +457,7 @@ function openDetail(id){
             <p>${esc(SIMPLE[x.id].p)}</p>
             <div class="remember"><b>Remember</b><span>${esc(SIMPLE[x.id].m)}</span></div>
           </div></section>` : ''}
+        ${EASY[x.id] ? `<details class="full"><summary>Full lecture notes (detailed)</summary><div class="notes">${render(EASY[x.id].body || x.body)}</div></details>` : ''}
         ${src.length ? `<section class="sources"><h2>Source: your lecture slides</h2>
           <p class="src-note">This topic was written from these ${src.length} ${src.length>1?'slides/pages':'slide/page'} of <strong>${esc([...new Set(src.map(s=>s.cap.split(' — ')[0]))].join(', '))}</strong>. Tap one to view it full size.</p>
           <div class="srcgrid">${src.map((s,i)=>`<button class="fig" data-gal="src" data-i="${i}"><img src="${s.path}" alt="${esc(s.cap)}" loading="lazy"><span>${esc(s.cap.split(' — ')[1])}</span></button>`).join('')}</div></section>` : ''}
@@ -409,6 +473,7 @@ function openDetail(id){
     </div>`;
   $('#list-view').hidden = true; dv.hidden = false;
   dv.style.animation = 'none'; dv.offsetHeight; dv.style.animation = '';
+  typesetMath(dv);
   $('#back').onclick = closeDetail;
   const sb = $('#simpleBtn');
   if (sb) sb.onclick = () => { const open = sb.getAttribute('aria-expanded') === 'true';
