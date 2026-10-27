@@ -229,6 +229,15 @@ button{font-family:inherit}
 .dg .band{stroke:var(--db);stroke-width:1.2;stroke-dasharray:6 5}
 .dg .fwd{fill:#FFF3B8}
 .dg .bwd{fill:#FFE0CF}
+.quiz{margin-top:18px;background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:6px 22px 18px}
+.quiz .sec-h small{text-transform:none;letter-spacing:0;font-weight:500;color:var(--muted);font-size:12.5px}
+.qa{border-top:1px solid var(--line)}
+.qa:first-of-type{border-top:0}
+.qa summary{cursor:pointer;padding:12px 28px 12px 0;font-weight:700;list-style:none;position:relative;min-height:44px}
+.qa summary::-webkit-details-marker{display:none}
+.qa summary::after{content:"+";position:absolute;right:4px;top:10px;font-size:20px;color:var(--muted)}
+.qa[open] summary::after{content:"\2212"}
+.qa p{margin:0 0 12px;padding:10px 14px;background:var(--soft);border-radius:12px}
 .simple{margin-top:22px}
 .simple-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;border:2px dashed var(--c);background:var(--paper);color:var(--ink);border-radius:18px;padding:16px 20px;font-weight:800;font-size:16px;cursor:pointer;min-height:56px;transition:background .25s,transform .25s var(--ease)}
 .simple-btn:hover{background:var(--soft);transform:translateY(-2px)}
@@ -336,6 +345,7 @@ footer strong{color:var(--ink)}
 <script src="data/easy-db.js"></script>
 <script src="data/easy-en.js"></script>
 <script src="data/easy-dm.js"></script>
+<script src="data/more-db.js"></script>
 <script src="data/easy-nn.js"></script>
 <script src="data/nn-diagrams.js"></script>
 <script>window.MathJax = { tex: { inlineMath: [['\\(','\\)']], displayMath: [['$$','$$']] }, svg: { fontCache: 'global' }, startup: { typeset: false } };</script>
@@ -348,7 +358,7 @@ const SUBJECTS = {
   en:{name:'Entrepreneurship', full:'Entrepreneurship', head:'Build your own venture', lede:'Mindset, intention, corporate entrepreneurship, new-entry strategy, creativity and going global.', disc:'Theories, myths, first movers, innovation, product life cycle and international entry.', c:'var(--en)', photo:'lean'},
   dm:{name:'Data Mining', full:'Data Mining', head:'Discover hidden patterns', lede:'Data mining tasks and KDD, linear regression, decision trees with ID3, and neural networks.', disc:'Classification, clustering, regression, ID3, perceptron and backpropagation.', c:'var(--dm)', photo:'brain1'}
 };
-const LECS = window.LECTURES, TOPICS = window.TOPICS, SIMPLE = window.SIMPLE || {}, SOURCES = window.SOURCES || {}, EASY = window.EASY || {};
+const LECS = window.LECTURES, TOPICS = window.TOPICS, SIMPLE = window.SIMPLE || {}, SOURCES = window.SOURCES || {}, EASY = window.EASY || {}, MORE = window.MORE || {};
 let GAL = { figs: [], src: [] };
 const $ = s => document.querySelector(s);
 const esc = s => String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
@@ -448,6 +458,8 @@ function openDetail(id){
         <section class="exam"><h2>Exam focus</h2><ul>${((EASY[x.id] && EASY[x.id].key) || x.key).map(k=>`<li>${inline(k)}</li>`).join('')}</ul></section>
         ${EASY[x.id] ? `<section class="notes easy"><h2 class="sec-h">Easy notes</h2>${render(EASY[x.id].n)}</section>
         <section class="notes example"><h2 class="sec-h">Step-by-step example</h2>${render(EASY[x.id].x)}</section>` : `<section class="notes">${render(x.body)}</section>`}
+        ${MORE[x.id] ? `<section class="notes more"><h2 class="sec-h">More to remember</h2>${render(MORE[x.id].m)}</section>
+        <section class="quiz"><h2 class="sec-h">Quick questions <small>(tap to see the answer)</small></h2>${MORE[x.id].q.map(([qq, a]) => `<details class="qa"><summary>${inline(qq)}</summary><p>${inline(a)}</p></details>`).join('')}</section>` : ''}
         ${x.figs ? `<section class="figs"><h2>Key diagrams</h2><div class="figgrid">${x.figs.map((f,i)=>`<button class="fig" data-gal="figs" data-i="${i}"><img src="img/fig/${f.src}.jpg" alt="${esc(f.cap)}" loading="lazy"><span>${esc(f.cap)}</span></button>`).join('')}</div></section>` : ''}
         ${SIMPLE[x.id] ? `<section class="simple">
           <button class="simple-btn" id="simpleBtn" aria-expanded="false" aria-controls="simpleBox">Explain it simply
